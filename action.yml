@@ -7,8 +7,12 @@ inputs:
   vercel-token:
     description: "Vercel API token"
     required: true
+  repo:
+    description: "Repository name"
+    required: true
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
     - ${{ inputs.vercel-token }}
+    - ${{ inputs.repo }}
