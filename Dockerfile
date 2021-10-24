@@ -1,10 +1,4 @@
-FROM alpine:latest
-
-RUN apk add --no-cache \
-  jq \
-  curl \
-  nodejs \
-  npm
+FROM ubuntu:latest
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
