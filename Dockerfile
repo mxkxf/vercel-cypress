@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM node:latest
 
 # https://docs.cypress.io/guides/continuous-integration/introduction#Machine-requirements
 RUN apt-get update
