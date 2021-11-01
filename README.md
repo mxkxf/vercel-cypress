@@ -26,4 +26,5 @@ jobs:
       - uses: actions/vercel-cypress@v1
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-token: my-repo
 ```
