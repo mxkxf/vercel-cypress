@@ -23,8 +23,11 @@ jobs:
   regression:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - uses: actions/vercel-cypress@v1
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          repo: my-repo
+          team: your-team-name
+          options: "--browser chrome --spec cypress/e2e/base/*"
 ```
