@@ -8,7 +8,8 @@ deployment.
 - [Vercel GitHub integration](https://vercel.com/docs/concepts/git/vercel-for-github).
 - [Vercel API token](https://vercel.com/account/tokens) which should be stored 
   as an [encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
-- If the project is in a team, you also need the team ID
+- You need the project ID (which can be found in the "Project Settings" on vercel)
+- If your project belongs to a team, you need the team ID as well
 
 Make sure that the API token has the right access scope and that your team id is
 correct. You can do this with the following check; the output should be a large
@@ -18,13 +19,13 @@ json payload.
 # reference: https://vercel.com/docs/rest-api/endpoints#list-deployments
 export TOKEN=YOUR_VERCEL_API_TOKEN
 
-# for personal projects
-curl -X GET "https://api.vercel.com/v6/deployments" \
+export PROJECT_ID=YOUR_PROJECT_ID
+curl -X GET "https://api.vercel.com/v6/deployments?projectId=${PROJECT_ID}" \
   -H "Authorization: Bearer ${TOKEN}"
 
-# for project in teams
+# for team projects
 export TEAM_ID=YOUR_TEAM_ID
-curl -X GET "https://api.vercel.com/v6/deployments?teamId=${TEAM_ID}" \
+curl -X GET "https://api.vercel.com/v6/deployments?projectId=${PROJECT_ID}&teamId=${TEAM_ID}" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
@@ -50,8 +51,10 @@ jobs:
         with:
           # required: vercel API token
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          # required: vercel team name / slug
-          team: your-team-name
+          # required: project id
+          project-id: your-project-id
+          # required if the project is from a team
+          team-id: your-team-id
           # optional: parameters that are passed to 'npx cypress run <options>'
           options: "--browser chrome --spec cypress/e2e/base/*"
 ```

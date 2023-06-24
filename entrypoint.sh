@@ -1,19 +1,20 @@
 #!/bin/sh -l
 
-# reference: https://vercel.com/docs/rest-api/endpoints#list-deployments
+# inputs arguments
+# 1 -> api token
+# 2 -> project id
+# 3 -> (optional) team id
+# 4 -> cypress options
 
-# if a team ID is passed, we filter for deployments of this team
-if [[ -z "$3" ]]; then
-    echo "=> checking url from latest deployment for team ${3}"
-    DEPLOYMENT_URL=$(curl -X GET "https://api.vercel.com/v6/deployments?teamId=$2" -H "Authorization: Bearer $1"  | jq -r '.deployments[0].url')
-else
-    echo "=> checking url from latest deployment"
-    DEPLOYMENT_URL=$(curl -X GET "https://api.vercel.com/v6/deployments" -H "Authorization: Bearer $1"  | jq -r '.deployments[0].url')
+QUERY="projectId=$2"
+
+if [[ -n "$3" ]]; then
+    QUERY="${QUERY}&teamId=${3}"
 fi
 
+DEPLOYMENT_URL=$(curl -X GET "https://api.vercel.com/v6/deployments?${QUERY}" -H "Authorization: Bearer $1"  | jq -r '.deployments[0].url')
 echo "=> found deployment url: ${DEPLOYMENT_URL}"
 
 yarn install
-
 export CYPRESS_BASE_URL="https://${DEPLOYMENT_URL}"
-npx cypress run $2
+npx cypress run $4

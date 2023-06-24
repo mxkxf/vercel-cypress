@@ -7,16 +7,24 @@ inputs:
   vercel-token:
     description: "Vercel API token"
     required: true
-  team:
-    description: "Team name"
+    default: ""
+  project-id:
+    description: "Project ID"
+    required: true
+    default: ""
+  team-id:
+    description: "Team ID (required if the project is from a team)"
     required: false
+    default: ""
   options:
     description: "Cypress options"
     required: false
+    default: ""
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
     - ${{ inputs.vercel-token }}
+    - ${{ inputs.project-id }}
+    - ${{ inputs.team-id }}
     - ${{ inputs.options }}
-    - ${{ inputs.team }}
