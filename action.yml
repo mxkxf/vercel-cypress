@@ -9,7 +9,7 @@ inputs:
     required: true
   team:
     description: "Team name"
-    required: true
+    required: false
   options:
     description: "Cypress options"
     required: false
@@ -18,5 +18,5 @@ runs:
   image: "Dockerfile"
   args:
     - ${{ inputs.vercel-token }}
-    - ${{ inputs.team }}
     - ${{ inputs.options }}
+    - ${{ inputs.team }}

@@ -8,17 +8,22 @@ deployment.
 - [Vercel GitHub integration](https://vercel.com/docs/concepts/git/vercel-for-github).
 - [Vercel API token](https://vercel.com/account/tokens) which should be stored 
   as an [encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
-- You Vercel team id or slug
+- If the project is in a team, you also need the team ID
 
 Make sure that the API token has the right access scope and that your team id is
 correct. You can do this with the following check; the output should be a large
 json payload.
 
 ```sh
-export TEAM_ID=YOUR_TEAM_ID
+# reference: https://vercel.com/docs/rest-api/endpoints#list-deployments
 export TOKEN=YOUR_VERCEL_API_TOKEN
 
-# reference: https://vercel.com/docs/rest-api/endpoints#list-deployments
+# for personal projects
+curl -X GET "https://api.vercel.com/v6/deployments" \
+  -H "Authorization: Bearer ${TOKEN}"
+
+# for project in teams
+export TEAM_ID=YOUR_TEAM_ID
 curl -X GET "https://api.vercel.com/v6/deployments?teamId=${TEAM_ID}" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
