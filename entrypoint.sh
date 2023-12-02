@@ -8,7 +8,7 @@
 
 QUERY="projectId=$2"
 
-if [[ -n "$3" ]]; then
+if [ -n "$3" ]; then
     QUERY="${QUERY}&teamId=${3}"
 fi
 
