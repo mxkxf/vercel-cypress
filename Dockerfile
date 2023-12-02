@@ -1,4 +1,5 @@
-FROM cypress/included:3.2.0
+# https://hub.docker.com/r/cypress/included/tags
+FROM cypress/included:13.6.0
 
 # https://docs.cypress.io/guides/continuous-integration/introduction#Machine-requirements
 RUN apt-get update && apt-get install -y curl jq
